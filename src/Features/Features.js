@@ -1,5 +1,6 @@
 import React from 'react';
 import './Features.css';
+import Option from './Option/Option';
 
 function Features(props) {
     const features = Object.keys(props.features)
@@ -8,14 +9,14 @@ function Features(props) {
             const selectedClass = item.name === props.selected[key].name ? 'feature__selected' : '';
             const featureClass = 'feature__option ' + selectedClass;
             return (
-                <li key={index} className="feature__item">
-                    <div className={featureClass}
-                        onClick={e => props.updateFeature(key, item)}>
-                        { item.name }
-                        ({ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'})
-                            .format(item.cost) })
-                    </div>
-                </li>
+                <Option
+                    key={index}
+                    feature={key}
+                    item={item}
+                    itemName={item.name}
+                    itemCost={item.cost}
+                    featureClass={featureClass}
+                    updateFeature={(key, item) => props.updateFeature(key, item)} />
             )
         });
 
@@ -28,11 +29,10 @@ function Features(props) {
             </div>
         )
     });
-    // console.log('props features.js', props);
     return (
         <section className="main__form">
             <h3>TECH SPECS AND CUSTOMIZATIONS</h3>
-            { features }
+                { features }
         </section>
     )
 }
